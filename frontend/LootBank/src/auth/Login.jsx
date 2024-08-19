@@ -14,7 +14,7 @@ const LoginPage = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('https://loot-bank.vercel.app/login', { email, password });
+            const response = await axios.post('https://loot-bank.vercel.app/auth/login', { email, password });
             const { token } = response.data;
 
             // Store token and redirect
