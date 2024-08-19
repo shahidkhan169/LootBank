@@ -15,7 +15,7 @@ const TransactionHistory = () => {
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const response = await axios.get('http://loot-bank.vercel.app/transactions', { withCredentials: true });
+        const response = await axios.get('https://loot-bank.vercel.app/transactions', { withCredentials: true });
         setTransactions(response.data);
       } catch (err) {
         setError('Failed to load transactions.');
@@ -46,7 +46,7 @@ const TransactionHistory = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post('http://loot-bank.vercel.app/logout', {}, { withCredentials: true });
+      await axios.post('https://loot-bank.vercel.app/logout', {}, { withCredentials: true });
       window.location.href = '/login'; // Redirect to login page
     } catch (error) {
       console.error('Error logging out:', error);
