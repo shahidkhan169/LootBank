@@ -26,7 +26,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get('http://loot-bank.vercel.app/profile', { withCredentials: true });
+        const response = await axios.get('https://loot-bank.vercel.app/profile', { withCredentials: true });
         setUser(response.data);
       } catch (error) {
         console.error('Error fetching user data:', error);
@@ -55,7 +55,7 @@ const Profile = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post('http://localhost:3000/logout', {}, { withCredentials: true });
+      await axios.post('https://loot-bank.vercel.app/logout', {}, { withCredentials: true });
       window.location.href = '/login'; // Redirect to login page
      
     } catch (error) {
