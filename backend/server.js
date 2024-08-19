@@ -12,7 +12,8 @@ const app = express();
 app.use(express.json());
 const corsOptions = {
   origin: 'https://loot-bank-frontend.vercel.app',
-  methods:['GET','POST','PUT','DELETE'],// Replace with your React app's URL
+  methods:['GET','POST','PUT','DELETE'],
+  optionsSuccessStatus: 200,// Replace with your React app's URL
   credentials: true,
 };
 app.use(cors(corsOptions));
