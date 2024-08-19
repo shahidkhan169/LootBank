@@ -19,7 +19,8 @@ app.use(helmet());
 app.use(cookieParser());
 
 // MongoDB connection URL
-const mongoUrl = "mongodb+srv://shahid1692004:rbaPyVM1wWINI3hz@lootbank.wlmtn.mongodb.net/?retryWrites=true&w=majority&appName=LootBank";
+const mongoUrl = process.env.MONGO_URL;
+
 
 // Connect to MongoDB
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -31,7 +32,7 @@ mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true })
 app.use(bank);
 
 // Start the server
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
