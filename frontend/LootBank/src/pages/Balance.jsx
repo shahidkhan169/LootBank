@@ -32,7 +32,7 @@ const CheckBalance = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post('http://loot-bank.vercel.app/logout', {}, { withCredentials: true });
+      await axios.post('https://loot-bank.vercel.app/logout', {}, { withCredentials: true });
       Cookies.remove('token'); // Remove token from cookies
         setAuth(null);
         navigate('/login'); 
@@ -47,7 +47,7 @@ const CheckBalance = () => {
       setMessage('');
 
       // Fetch balance
-      const response = await axios.post('http://loot-bank.vercel.app/check-balance', { mpin }, { withCredentials: true });
+      const response = await axios.post('https://loot-bank.vercel.app/check-balance', { mpin }, { withCredentials: true });
       
       // Update balance and set success message
       setBalance(response.data.balance);
