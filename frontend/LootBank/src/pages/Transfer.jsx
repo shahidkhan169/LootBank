@@ -37,7 +37,7 @@ const Transfer = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post('http://localhost:3000/logout', {}, { withCredentials: true });
+      await axios.post('http://loot-bank.vercel.app/logout', {}, { withCredentials: true });
       window.location.href = '/login';
     } catch (error) {
       console.error('Error logging out:', error);
@@ -51,7 +51,7 @@ const Transfer = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:3000/transfer', { amount, targetAccountNo, mpin, note }, { withCredentials: true });
+      const response = await axios.post('http://loot-bank.vercel.app/transfer', { amount, targetAccountNo, mpin, note }, { withCredentials: true });
       setMessage(response.data);
       setIsSuccessful(true);
       setTimeout(() => {
