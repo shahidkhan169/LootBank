@@ -11,7 +11,7 @@ const app = express();
 // Middleware
 app.use(express.json());
 const corsOptions = {
-  origin: 'http://localhost:5173', // Replace with your React app's URL
+  origin: 'http://loot-bank.vercel.app', // Replace with your React app's URL
   credentials: true,
 };
 app.use(cors(corsOptions));
