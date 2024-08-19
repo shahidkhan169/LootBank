@@ -26,7 +26,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/profile', { withCredentials: true });
+        const response = await axios.get('http://loot-bank.vercel.app/profile', { withCredentials: true });
         setUser(response.data);
       } catch (error) {
         console.error('Error fetching user data:', error);
