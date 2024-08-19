@@ -1,0 +1,81 @@
+/* Home.css */
+
+.slide-in-left {
+  animation: slide-in-left 1s ease-out;
+}
+
+@keyframes slide-in-left {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fade-in 1s ease-out;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #333;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
+.navbar .text-3xl {
+  margin-right: 2rem;
+}
+
+.navbar .nav-links {
+  margin-right: 1rem; /* Space between links and login button */
+}
+
+.navbar .nav-links a {
+  margin-right: 1rem;
+}
+
+.navbar .login-button {
+  margin-left: auto; /* Align the login button to the right */
+}
+
+.navbar .login-button button {
+  background-color: #4a4a4a;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.navbar .login-button button:hover {
+  background-color: #1e90ff;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.shadow-lg {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
