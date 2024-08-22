@@ -65,7 +65,7 @@ const MultiStepForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://loot-bank.vercel.app/register', formData);
+      const response = await axios.post('https://loot-bank-api.vercel.app/register', formData);
       setSubmissionStatus('success');
       setSubmissionMessage('Successfully registered');
       setFormData({

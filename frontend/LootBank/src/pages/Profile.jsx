@@ -29,7 +29,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get('https://loot-bank.vercel.app/profile', {
+        const response = await axios.get('https://loot-bank-api.vercel.app/profile', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -62,7 +62,7 @@ const Profile = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post('https://loot-bank.vercel.app/logout', {}, {
+      await axios.post('https://loot-bank-api.vercel.app/logout', {}, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

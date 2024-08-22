@@ -21,7 +21,7 @@ const TransactionHistory = () => {
     const fetchTransactions = async () => {
       try {
         const token = getToken();
-        const response = await axios.get('https://loot-bank.vercel.app/transactions', {
+        const response = await axios.get('https://loot-bank-api.vercel.app/transactions', {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -57,7 +57,7 @@ const TransactionHistory = () => {
   const handleLogout = async () => {
     try {
       const token = getToken();
-      await axios.post('https://loot-bank.vercel.app/logout', {}, {
+      await axios.post('https://loot-bank-api.vercel.app/logout', {}, {
         headers: {
           Authorization: `Bearer ${token}`
         }

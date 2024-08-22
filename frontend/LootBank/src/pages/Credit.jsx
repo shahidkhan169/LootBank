@@ -45,7 +45,7 @@ const Credit = () => {
     try {
       const token = getToken();
       await axios.post(
-        'https://loot-bank.vercel.app/logout',
+        'https://loot-bank-api.vercel.app/logout',
         {},
         {
           headers: { Authorization: `Bearer ${token}` }
@@ -66,7 +66,7 @@ const Credit = () => {
     try {
       const token = getToken();
       const response = await axios.post(
-        'https://loot-bank.vercel.app/credit',
+        'https://loot-bank-api.vercel.app/credit',
         { amount, mpin, note },
         {
           headers: { Authorization: `Bearer ${token}` }
