@@ -153,9 +153,10 @@ module.exports.login = async (req, res) => {
         }
 
         // Token creation during login
-        const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY);
+        const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY); // Set an expiration time for security
 
-        res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production',sameSite: 'Strict' });
+        // Send the token in the Authorization header
+        res.setHeader('Authorization', `Bearer ${token}`);
         res.status(200).json({ message: 'Login successful',token, route: '/profile' });
     } catch (error) {
         res.status(500).send(error.message);
@@ -402,6 +403,6 @@ module.exports.Transactions= async (req, res) => {
 
 // Express route to handle logout
 module.exports.logout = async (req, res) => {
-    res.cookie('token', '', { httpOnly: true, maxAge: 0 }); // Clear the token cookie
-    res.sendStatus(204); // No Content
+    localStorage.removeItem('token'); 
+    window.location.href = '/login';
 };

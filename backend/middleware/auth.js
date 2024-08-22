@@ -1,19 +1,20 @@
 const jwt = require('jsonwebtoken');
-const dotenv=require('dotenv')
+const dotenv = require('dotenv');
 dotenv.config();
 
 const auth = (req, res, next) => {
-    try{
-        const token = req.cookies.token; 
+    try {
+        const authHeader = req.headers['authorization'];
+        const token = authHeader && authHeader.split(' ')[1]; // Extract token from "Bearer <token>"
 
         if (!token) return res.status(401).send('Unauthorized');
-    
-        jwt.verify(token,process.env.SECRET_KEY, (err, user) => {
+
+        jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
             if (err) return res.status(403).send('Forbidden');
             req.userId = user.userId; 
             next();
         });
-    } catch(e){
+    } catch (e) {
         console.log(e);
         res.status(401).send("Token Expired");
     }

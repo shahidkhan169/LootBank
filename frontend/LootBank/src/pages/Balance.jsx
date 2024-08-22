@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { UserIcon } from '@heroicons/react/solid';
 import { MenuIcon } from '@heroicons/react/outline';
@@ -12,6 +12,7 @@ const CheckBalance = () => {
   const [message, setMessage] = useState('');
   const [mpin, setMpin] = useState('');
   const [balance, setBalance] = useState(null);
+  const navigate = useNavigate(); // Navigate hook for redirection
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -32,10 +33,14 @@ const CheckBalance = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post('https://loot-bank.vercel.app/logout', {}, { withCredentials: true });
-      Cookies.remove('token'); // Remove token from cookies
-        setAuth(null);
-        navigate('/login'); 
+      // Clear token from local storage and logout
+      localStorage.removeItem('token');
+      await axios.post('https://loot-bank.vercel.app/logout', {}, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+      navigate('/login'); // Redirect to login page
     } catch (error) {
       console.error('Error logging out:', error);
     }
@@ -46,14 +51,19 @@ const CheckBalance = () => {
       // Clear previous message
       setMessage('');
 
-      // Fetch balance
-      const response = await axios.post('https://loot-bank.vercel.app/check-balance', { mpin }, { withCredentials: true });
+      // Fetch balance with token in header
+      const token = localStorage.getItem('token');
+      const response = await axios.post('https://loot-bank.vercel.app/check-balance', { mpin }, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
       
       // Update balance and set success message
       setBalance(response.data.balance);
     } catch (error) {
       // Display error message
-      setMessage(error.response.data || 'An error occurred');
+      setMessage(error.response?.data || 'An error occurred');
       setBalance(null); // Clear balance if there's an error
     }
   };

@@ -12,10 +12,20 @@ const TransactionHistory = () => {
   const dropdownRef = useRef(null); // Ref for the dropdown
   const dashboardRef = useRef(null); // Ref for the dashboard
 
+  const getToken = () => {
+    // Adjust this to your method of storing tokens
+    return localStorage.getItem('token');
+  };
+
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const response = await axios.get('https://loot-bank.vercel.app/transactions', { withCredentials: true });
+        const token = getToken();
+        const response = await axios.get('https://loot-bank.vercel.app/transactions', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
         setTransactions(response.data);
       } catch (err) {
         setError('Failed to load transactions.');
@@ -46,7 +56,13 @@ const TransactionHistory = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post('https://loot-bank.vercel.app/logout', {}, { withCredentials: true });
+      const token = getToken();
+      await axios.post('https://loot-bank.vercel.app/logout', {}, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      localStorage.removeItem('token'); // Clear the token from localStorage
       window.location.href = '/login'; // Redirect to login page
     } catch (error) {
       console.error('Error logging out:', error);

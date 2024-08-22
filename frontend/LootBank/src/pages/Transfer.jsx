@@ -5,6 +5,7 @@ import { UserIcon } from '@heroicons/react/solid';
 import { MenuIcon } from '@heroicons/react/outline';
 import { CheckCircleIcon } from '@heroicons/react/outline'; // Import checkmark icon
 import successSound from '../assets/sound.mp3'
+
 const Transfer = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showDashboard, setShowDashboard] = useState(false);
@@ -37,7 +38,8 @@ const Transfer = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post('https://loot-bank.vercel.app/logout', {}, { withCredentials: true });
+      // Remove token from localStorage
+      localStorage.removeItem('token');
       window.location.href = '/login';
     } catch (error) {
       console.error('Error logging out:', error);
@@ -51,14 +53,23 @@ const Transfer = () => {
     }
 
     try {
-      const response = await axios.post('https://loot-bank.vercel.app/transfer', { amount, targetAccountNo, mpin, note }, { withCredentials: true });
+      const token = localStorage.getItem('token');
+      const response = await axios.post(
+        'https://loot-bank.vercel.app/transfer',
+        { amount, targetAccountNo, mpin, note },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setMessage(response.data);
       setIsSuccessful(true);
       setTimeout(() => {
         setIsSuccessful(false);
         setMessage('');
         const audio = new Audio(successSound);
-       audio.play(); // Clear message
+        audio.play(); // Clear message
         window.location.reload(); // Reload the page
       }, 2000); // 2 seconds for the success message
     } catch (error) {
@@ -71,38 +82,37 @@ const Transfer = () => {
     <div className="min-h-screen flex flex-col bg-gray-200">
       {/* Navbar */}
       <nav className="fixed top-0 left-0 right-0 z-10 flex justify-between items-center p-6 bg-gray-800 text-white">
-  <div className="ml-4 flex items-center text-3xl font-bold">
-    <MenuIcon
-      className="h-10 w-10 mr-4 cursor-pointer"
-      onClick={() => setShowDashboard(!showDashboard)}
-    />
-    LootBank
-  </div>
-  {/* Adjusted flex container */}
-  <div className="flex items-center space-x-9">
-    <Link to="/innerhome" className="hover:text-gray-300">Home</Link>
-    <Link to="/about" className="hover:text-gray-300">About Us</Link>
-    <div className="relative">
-      <button
-        className="flex items-center text-white"
-        onClick={() => setShowDropdown(!showDropdown)}
-      >
-        <UserIcon className={`h-8 w-8 ${showDropdown ? 'h-12 w-12' : ''}`} />
-      </button>
-      {showDropdown && (
-        <div ref={dropdownRef} className="absolute right-0 mt-2 w-48 bg-white text-black rounded-md shadow-lg">
-          <button
-            onClick={handleLogout}
-            className="block w-full px-4 py-2 text-left hover:bg-gray-200"
-          >
-            Logout
-          </button>
+        <div className="ml-4 flex items-center text-3xl font-bold">
+          <MenuIcon
+            className="h-10 w-10 mr-4 cursor-pointer"
+            onClick={() => setShowDashboard(!showDashboard)}
+          />
+          LootBank
         </div>
-      )}
-    </div>
-  </div>
-</nav>
-
+        {/* Adjusted flex container */}
+        <div className="flex items-center space-x-9">
+          <Link to="/innerhome" className="hover:text-gray-300">Home</Link>
+          <Link to="/about" className="hover:text-gray-300">About Us</Link>
+          <div className="relative">
+            <button
+              className="flex items-center text-white"
+              onClick={() => setShowDropdown(!showDropdown)}
+            >
+              <UserIcon className={`h-8 w-8 ${showDropdown ? 'h-12 w-12' : ''}`} />
+            </button>
+            {showDropdown && (
+              <div ref={dropdownRef} className="absolute right-0 mt-2 w-48 bg-white text-black rounded-md shadow-lg">
+                <button
+                  onClick={handleLogout}
+                  className="block w-full px-4 py-2 text-left hover:bg-gray-200"
+                >
+                  Logout
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      </nav>
 
       <div className="flex mt-20 justify-center items-center flex-1">
         {/* Sidebar */}
@@ -136,7 +146,7 @@ const Transfer = () => {
             {isSuccessful ? (
               <div className="flex flex-col justify-center items-center mb-4 animate-scale-up">
                 <CheckCircleIcon className="h-12 w-12 text-green-500 mb-2" />
-                <span className="text-green-500 font-semibold text-2xl">Transaction Successfull</span>
+                <span className="text-green-500 font-semibold text-2xl">Transaction Successful</span>
               </div>
             ) : (
               <>
@@ -188,16 +198,15 @@ const Transfer = () => {
                 <div className="flex items-center mb-4">
                   <input
                     type="checkbox"
-                    className="mr-2"
                     checked={termsAccepted}
-                    onChange={(e) => setTermsAccepted(e.target.checked)}
+                    onChange={() => setTermsAccepted(!termsAccepted)}
+                    className="mr-2"
                   />
-                  <label className="text-gray-700">I accept the terms and conditions</label>
+                  <span>I accept the terms and conditions</span>
                 </div>
                 <button
                   onClick={handleTransfer}
-                  className={`w-full p-2 rounded-lg ${termsAccepted ? 'bg-slate-500 text-white hover:bg-cyan-600' : 'bg-gray-400 text-gray-700 cursor-not-allowed'}`}
-                  disabled={!termsAccepted}
+                  className="bg-gray-800 text-white py-2 px-4 rounded-lg w-full"
                 >
                   Transfer
                 </button>

@@ -23,10 +23,17 @@ const Profile = () => {
     district: ''
   });
 
+  // Retrieve the Bearer token from localStorage or context
+  const token = localStorage.getItem('authToken'); 
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get('https://loot-bank.vercel.app/profile', { withCredentials: true });
+        const response = await axios.get('https://loot-bank.vercel.app/profile', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setUser(response.data);
       } catch (error) {
         console.error('Error fetching user data:', error);
@@ -34,7 +41,7 @@ const Profile = () => {
     };
 
     fetchUserData();
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -55,9 +62,13 @@ const Profile = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post('https://loot-bank.vercel.app/logout', {}, { withCredentials: true });
+      await axios.post('https://loot-bank.vercel.app/logout', {}, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      localStorage.removeItem('authToken'); // Remove token from localStorage
       window.location.href = '/login'; // Redirect to login page
-     
     } catch (error) {
       console.error('Error logging out:', error);
     }
@@ -67,38 +78,36 @@ const Profile = () => {
     <div className="min-h-screen flex flex-col">
       {/* Navbar */}
       <nav className="fixed top-0 left-0 right-0 z-10 flex justify-between items-center p-6 bg-gray-800 text-white">
-  <div className="ml-4 flex items-center text-3xl font-bold">
-    <MenuIcon
-      className="h-10 w-10 mr-4 cursor-pointer"
-      onClick={() => setShowDashboard(!showDashboard)}
-    />
-    LootBank
-  </div>
-  {/* Adjusted flex container */}
-  <div className="flex items-center space-x-9">
-    <Link to="/innerhome" className="hover:text-gray-300">Home</Link>
-    <Link to="/about" className="hover:text-gray-300">About Us</Link>
-    <div className="relative">
-      <button
-        className="flex items-center text-white"
-        onClick={() => setShowDropdown(!showDropdown)}
-      >
-        <UserIcon className={`h-8 w-8 ${showDropdown ? 'h-12 w-12' : ''}`} />
-      </button>
-      {showDropdown && (
-        <div ref={dropdownRef} className="absolute right-0 mt-2 w-48 bg-white text-black rounded-md shadow-lg">
-          <button
-            onClick={handleLogout}
-            className="block w-full px-4 py-2 text-left hover:bg-gray-200"
-          >
-            Logout
-          </button>
+        <div className="ml-4 flex items-center text-3xl font-bold">
+          <MenuIcon
+            className="h-10 w-10 mr-4 cursor-pointer"
+            onClick={() => setShowDashboard(!showDashboard)}
+          />
+          LootBank
         </div>
-      )}
-    </div>
-  </div>
-</nav>
-
+        <div className="flex items-center space-x-9">
+          <Link to="/innerhome" className="hover:text-gray-300">Home</Link>
+          <Link to="/about" className="hover:text-gray-300">About Us</Link>
+          <div className="relative">
+            <button
+              className="flex items-center text-white"
+              onClick={() => setShowDropdown(!showDropdown)}
+            >
+              <UserIcon className={`h-8 w-8 ${showDropdown ? 'h-12 w-12' : ''}`} />
+            </button>
+            {showDropdown && (
+              <div ref={dropdownRef} className="absolute right-0 mt-2 w-48 bg-white text-black rounded-md shadow-lg">
+                <button
+                  onClick={handleLogout}
+                  className="block w-full px-4 py-2 text-left hover:bg-gray-200"
+                >
+                  Logout
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      </nav>
 
       {/* Content */}
       <div className="flex mt-20">
@@ -136,7 +145,7 @@ const Profile = () => {
                 <UserIcon className="h-24 w-24 text-gray-600" />
                 <div className="ml-4 p-5">
                   <h2 className="text-4xl font-bold">{user.name}</h2>
-                  <p className="text-xl font-semibold">{user.userid}</p>
+                  <p className="text-xl font-semibold">{user.userId}</p>
                   <p className="text-xl font-semibold">{user.email}</p>
                 </div>
               </div>

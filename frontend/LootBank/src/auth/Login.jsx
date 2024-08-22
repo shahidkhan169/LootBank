@@ -17,8 +17,8 @@ const LoginPage = () => {
             const response = await axios.post('https://loot-bank.vercel.app/login', { email, password });
             const { token } = response.data;
 
-            // Store token and redirect
-            document.cookie = `token=${token}; path=/`;
+            // Store token in localStorage
+            localStorage.setItem('token', token);
             navigate('/profile'); // Redirect to /profile using navigate
         } catch (err) {
             console.error('Login error:', err); // Add this line for debugging
@@ -83,7 +83,7 @@ const LoginPage = () => {
                     {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
                     <div className="flex justify-between items-center mb-6">
                         <a href="#" className="text-sm text-gray-800 hover:underline">Forgot password?</a>
-                        <Link to="/register"className="text-sm text-gray-800 hover:underline">Don't have an account?</Link>
+                        <Link to="/register" className="text-sm text-gray-800 hover:underline">Don't have an account?</Link>
                     </div>
                     <button
                         type="submit"
