@@ -1,15 +1,19 @@
 {
     "version":2,
     "builds":[
+<<<<<<< HEAD
         {
         "src":"*.js",
         "use":"@versal/node"
         }
+=======
+        {"src":"server.js","use":"@versal/node"}
+>>>>>>> 77a13e12a1ddd4654552ef817f6730239129b07f
     ],
     "routes":[
         {
             "src":"/(.*)",
-            "dest":"/"
+            "dest":"/server.js"
         }
     ]
 }
