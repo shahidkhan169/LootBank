@@ -8,15 +8,15 @@ const cookieParser = require("cookie-parser");
 
 const app = express();
 require('dotenv').config();
-
-const corsOptions = {
+app.use(cors());
+app.use(cors({
   origin: 'https://loot-bank-frontend.vercel.app', // Ensure this is correct
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
-};
+}));
 
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(helmet());
 app.use(express.json());
 app.use(cookieParser());
