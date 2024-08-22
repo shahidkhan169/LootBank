@@ -10,7 +10,7 @@ const app = express();
 require('dotenv').config();
 app.use(cors());
 app.use(cors({
-  origin: 'https://loot-bank-frontend.vercel.app', // Ensure this is correct
+  origin: '*', // Ensure this is correct
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
