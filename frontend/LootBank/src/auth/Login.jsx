@@ -16,13 +16,18 @@ const LoginPage = () => {
         try {
             const response = await axios.post('https://loot-bank.vercel.app/login', { email, password });
             const { token } = response.data;
-
-            // Store token in localStorage
-            localStorage.setItem('token', token);
-            navigate('/profile'); // Redirect to /profile using navigate
+    
+            // Check if token is received
+            if (token) {
+                // Store token in localStorage
+                localStorage.setItem('token', token);
+                navigate('/profile'); // Redirect to /profile using navigate
+            } else {
+                throw new Error('Token not received');
+            }
         } catch (err) {
-            console.error('Login error:', err); // Add this line for debugging
-            setError(err.response?.data || 'An error occurred');
+            console.error('Login error:', err); // Log error for debugging
+            setError(err.response?.data || 'An error occurred'); // Ensure this is the correct way to access the error message
         }
     };
 
