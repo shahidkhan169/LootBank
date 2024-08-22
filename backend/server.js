@@ -9,17 +9,18 @@ const cookieParser = require("cookie-parser");
 const app = express();
 require('dotenv').config();
 
-// Middleware
-app.use(express.json());
 const corsOptions = {
-  origin: 'https://loot-bank-frontend.vercel.app',
-  methods:['GET','POST','PUT','DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],// Replace with your React app's URL
-  credentials: true,
+  origin: 'https://loot-bank-frontend.vercel.app', // Ensure this is correct
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
 };
+
 app.use(cors(corsOptions));
 app.use(helmet());
+app.use(express.json());
 app.use(cookieParser());
+
 
 // MongoDB connection URL
 const mongoUrl = process.env.MONGO_URL;
