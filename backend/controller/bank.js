@@ -3,7 +3,7 @@ const Transaction = require('../models/Transaction');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
-
+require('dotenv').config();
 
 // Helper functions
 const generateUsername = async (email) => {
@@ -155,7 +155,7 @@ module.exports.login = async (req, res) => {
         // Token creation during login
         const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY);
 
-        res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
+        res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production',sameSite: 'Strict' });
         res.status(200).json({ message: 'Login successful',token, route: '/profile' });
     } catch (error) {
         res.status(500).send(error.message);
