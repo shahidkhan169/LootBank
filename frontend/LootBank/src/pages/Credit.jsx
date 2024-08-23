@@ -42,21 +42,9 @@ const Credit = () => {
   };
 
   const handleLogout = async () => {
-    try {
-      const token = getToken();
-      await axios.post(
-        'https://loot-bank-api.vercel.app/logout',
-        {},
-        {
-          headers: { Authorization: `Bearer ${token}` }
-        }
-      );
-      localStorage.removeItem('token'); // Clear token after logout
-      window.location.href = '/login';
-    } catch (error) {
-      console.error('Error logging out:', error);
-    }
-  };
+    localStorage.removeItem('token'); // Remove token from localStorage
+    window.location.href = '/login'; // Redirect to login page
+};
 
   const handleCredit = async () => {
     if (!termsAccepted) {
@@ -66,7 +54,7 @@ const Credit = () => {
     try {
       const token = getToken();
       const response = await axios.post(
-        'https://loot-bank-api.vercel.app/credit',
+        'http://localhost:3000/credit',
         { amount, mpin, note },
         {
           headers: { Authorization: `Bearer ${token}` }

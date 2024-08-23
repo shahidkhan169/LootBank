@@ -32,19 +32,9 @@ const CheckBalance = () => {
   }, []);
 
   const handleLogout = async () => {
-    try {
-      // Clear token from local storage and logout
-      localStorage.removeItem('token');
-      await axios.post('https://loot-bank-api.vercel.app/logout', {}, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
-      });
-      navigate('/login'); // Redirect to login page
-    } catch (error) {
-      console.error('Error logging out:', error);
-    }
-  };
+    localStorage.removeItem('token'); // Remove token from localStorage
+    window.location.href = '/login'; // Redirect to login page
+};
 
   const handleCheckBalance = async () => {
     try {
@@ -53,9 +43,9 @@ const CheckBalance = () => {
 
       // Fetch balance with token in header
       const token = localStorage.getItem('token');
-      const response = await axios.post('https://loot-bank-api.vercel.app/check-balance', { mpin }, {
+      const response = await axios.post('http://localhost:3000/check-balance', { mpin }, {
         headers: {
-          'Authorization': `Bearer ${token}`
+          Authorization: `Bearer ${token}`
         }
       });
       

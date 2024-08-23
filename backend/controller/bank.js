@@ -402,7 +402,4 @@ module.exports.Transactions= async (req, res) => {
 };
 
 // Express route to handle logout
-module.exports.logout = async (req, res) => {
-    localStorage.removeItem('token'); 
-    window.location.href = '/login';
-};
+

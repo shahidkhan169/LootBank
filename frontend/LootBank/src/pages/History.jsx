@@ -21,7 +21,7 @@ const TransactionHistory = () => {
     const fetchTransactions = async () => {
       try {
         const token = getToken();
-        const response = await axios.get('https://loot-bank-api.vercel.app/transactions', {
+        const response = await axios.get('http://localhost:3000/transactions', {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -55,19 +55,9 @@ const TransactionHistory = () => {
   }, []);
 
   const handleLogout = async () => {
-    try {
-      const token = getToken();
-      await axios.post('https://loot-bank-api.vercel.app/logout', {}, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-      localStorage.removeItem('token'); // Clear the token from localStorage
-      window.location.href = '/login'; // Redirect to login page
-    } catch (error) {
-      console.error('Error logging out:', error);
-    }
-  };
+    localStorage.removeItem('token'); // Remove token from localStorage
+    window.location.href = '/login'; // Redirect to login page
+};
 
   if (loading) return <div className="text-center p-4">Loading...</div>;
 

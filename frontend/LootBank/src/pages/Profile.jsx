@@ -23,13 +23,18 @@ const Profile = () => {
     district: ''
   });
 
-  // Retrieve the Bearer token from localStorage or context
-  const token = localStorage.getItem('authToken'); 
+  // Retrieve the Bearer token from localStorage
+  const token = localStorage.getItem('token'); 
 
   useEffect(() => {
     const fetchUserData = async () => {
+      if (!token) {
+        console.error('No auth token found. Redirecting to login.');
+        return;
+      }
+
       try {
-        const response = await axios.get('https://loot-bank-api.vercel.app/profile', {
+        const response = await axios.get('http://localhost:3000/profile', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -37,6 +42,10 @@ const Profile = () => {
         setUser(response.data);
       } catch (error) {
         console.error('Error fetching user data:', error);
+        if (error.response && error.response.status === 403) {
+          // If the token is invalid or expired, redirect to the login page
+          window.location.href = '/login';
+        }
       }
     };
 
@@ -61,17 +70,8 @@ const Profile = () => {
   }, []);
 
   const handleLogout = async () => {
-    try {
-      await axios.post('https://loot-bank-api.vercel.app/logout', {}, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      localStorage.removeItem('authToken'); // Remove token from localStorage
+      localStorage.removeItem('token'); // Remove token from localStorage
       window.location.href = '/login'; // Redirect to login page
-    } catch (error) {
-      console.error('Error logging out:', error);
-    }
   };
 
   return (

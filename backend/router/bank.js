@@ -9,8 +9,7 @@
     checkBalance,
     getUserProfile,
     Transactions,
-    updateUserProfile,
-    logout
+    updateUserProfile
   } = require('../controller/bank');
 
   router.post('/register', register);
@@ -21,6 +20,5 @@
   router.get('/profile', auth, getUserProfile);
   router.get('/transactions',auth,Transactions)
   router.put('/updateprofile',auth,updateUserProfile)
-  router.post('/logout',logout)
 
   module.exports = router;

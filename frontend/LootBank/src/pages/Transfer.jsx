@@ -37,18 +37,9 @@ const Transfer = () => {
   }, []);
 
   const handleLogout = async () => {
-    try {
-      await axios.post('https://loot-bank-api.vercel.app/logout', {}, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      localStorage.removeItem('authToken'); // Remove token from localStorage
-      window.location.href = '/login'; // Redirect to login page
-    } catch (error) {
-      console.error('Error logging out:', error);
-    }
-  };
+    localStorage.removeItem('token'); // Remove token from localStorage
+    window.location.href = '/login'; // Redirect to login page
+};
 
   const handleTransfer = async () => {
     if (!termsAccepted) {
@@ -59,7 +50,7 @@ const Transfer = () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.post(
-        'https://loot-bank-api.vercel.app/transfer',
+        'http://localhost:3000/transfer',
         { amount, targetAccountNo, mpin, note },
         {
           headers: {
