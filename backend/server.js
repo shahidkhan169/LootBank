@@ -17,9 +17,9 @@ app.use(cors(
 ));
 app.use(helmet());
 app.use(express.json());
-const mongoUrl = "mongodb+srv://shahid1692004:rbaPyVM1wWINI3hz@lootbank.wlmtn.mongodb.net/?retryWrites=true&w=majority&appName=LootBank";
 
-mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true })
+
+mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("Failed to connect to MongoDB:", err.message));
 
