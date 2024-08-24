@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { UserIcon, MenuIcon } from '@heroicons/react/solid'; // Ensure you have @heroicons/react installed
+import { useNavigate } from 'react-router-dom';
 
 const TransactionHistory = () => {
   const [transactions, setTransactions] = useState([]);
@@ -54,9 +55,10 @@ const TransactionHistory = () => {
     };
   }, []);
 
+  const navigate = useNavigate();
   const handleLogout = async () => {
     localStorage.removeItem('token'); // Remove token from localStorage
-    window.location.href = '/login'; // Redirect to login page
+    navigate('/login');
 };
 
   if (loading) return <div className="text-center p-4">Loading...</div>;

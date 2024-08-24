@@ -6,6 +6,7 @@ import { MenuIcon } from '@heroicons/react/outline';
 import { CheckCircleIcon } from '@heroicons/react/outline'; // Import checkmark icon
 import './Credit.css';
 import successSound from '../assets/sound.mp3';
+import { useNavigate } from 'react-router-dom';
 
 const Credit = () => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -40,10 +41,10 @@ const Credit = () => {
     // Replace this with your logic to retrieve the Bearer token
     return localStorage.getItem('token'); // or another source of your token
   };
-
+  const navigate = useNavigate();
   const handleLogout = async () => {
     localStorage.removeItem('token'); // Remove token from localStorage
-    window.location.href = '/login'; // Redirect to login page
+    navigate('/login');
 };
 
   const handleCredit = async () => {
@@ -67,7 +68,7 @@ const Credit = () => {
       setTimeout(() => {
         setIsSuccessful(false);
         setMessage(''); // Clear message
-        window.location.reload(); // Reload the page
+        navigate('/credit'); // Reload the page
       }, 4000); // 4 seconds for the success message
     } catch (error) {
       setMessage(error.response.data);

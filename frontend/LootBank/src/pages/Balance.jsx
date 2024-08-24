@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { UserIcon } from '@heroicons/react/solid';
 import { MenuIcon } from '@heroicons/react/outline';
+import { useNavigate } from 'react-router-dom';
 
 const CheckBalance = () => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -31,9 +32,10 @@ const CheckBalance = () => {
     };
   }, []);
 
+
   const handleLogout = async () => {
     localStorage.removeItem('token'); // Remove token from localStorage
-    navigate('/login');// Redirect to login page
+    navigate('/login');
 };
 
   const handleCheckBalance = async () => {

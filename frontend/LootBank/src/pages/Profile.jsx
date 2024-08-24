@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { UserIcon } from '@heroicons/react/solid'; // Ensure you have @heroicons/react installed
 import { MenuIcon } from '@heroicons/react/outline'; // Icon for the dashboard toggle
-
+import { useNavigate } from 'react-router-dom';
 const Profile = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showDashboard, setShowDashboard] = useState(false);
@@ -44,7 +44,7 @@ const Profile = () => {
         console.error('Error fetching user data:', error);
         if (error.response && error.response.status === 403) {
           // If the token is invalid or expired, redirect to the login page
-          window.location.href = '/login';
+          navigate('/login');
         }
       }
     };
@@ -69,10 +69,11 @@ const Profile = () => {
     };
   }, []);
 
+  const navigate = useNavigate();
   const handleLogout = async () => {
-      localStorage.removeItem('token'); // Remove token from localStorage
-      window.location.href = '/login'; // Redirect to login page
-  };
+    localStorage.removeItem('token'); // Remove token from localStorage
+    navigate('/login');
+};
 
   return (
     <div className="min-h-screen flex flex-col">

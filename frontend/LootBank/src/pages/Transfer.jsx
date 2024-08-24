@@ -5,7 +5,7 @@ import { UserIcon } from '@heroicons/react/solid';
 import { MenuIcon } from '@heroicons/react/outline';
 import { CheckCircleIcon } from '@heroicons/react/outline'; // Import checkmark icon
 import successSound from '../assets/sound.mp3'
-
+import { useNavigate } from 'react-router-dom';
 const Transfer = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showDashboard, setShowDashboard] = useState(false);
@@ -36,9 +36,10 @@ const Transfer = () => {
     };
   }, []);
 
+  const navigate = useNavigate();
   const handleLogout = async () => {
     localStorage.removeItem('token'); // Remove token from localStorage
-    window.location.href = '/login'; // Redirect to login page
+    navigate('/login');
 };
 
   const handleTransfer = async () => {
@@ -65,7 +66,7 @@ const Transfer = () => {
         setMessage('');
         const audio = new Audio(successSound);
         audio.play(); // Clear message
-        window.location.reload(); // Reload the page
+        navigate('/transfer') // Reload the page
       }, 2000); // 2 seconds for the success message
     } catch (error) {
       setMessage(error.response.data);
