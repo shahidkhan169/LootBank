@@ -33,7 +33,7 @@ const CheckBalance = () => {
 
   const handleLogout = async () => {
     localStorage.removeItem('token'); // Remove token from localStorage
-    window.location.href = '/login'; // Redirect to login page
+    navigate('/login');// Redirect to login page
 };
 
   const handleCheckBalance = async () => {
