@@ -21,7 +21,7 @@ const TransactionHistory = () => {
     const fetchTransactions = async () => {
       try {
         const token = getToken();
-        const response = await axios.get('http://localhost:3000/transactions', {
+        const response = await axios.get('https://lootbank-api.onrender.com/transactions', {
           headers: {
             Authorization: `Bearer ${token}`
           }

@@ -54,7 +54,7 @@ const Credit = () => {
     try {
       const token = getToken();
       const response = await axios.post(
-        'http://localhost:3000/credit',
+        'https://lootbank-api.onrender.com/credit',
         { amount, mpin, note },
         {
           headers: { Authorization: `Bearer ${token}` }

@@ -14,7 +14,7 @@ const LoginPage = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:3000/login', { email, password });
+            const response = await axios.post('https://lootbank-api.onrender.com/login', { email, password });
             const { token } = response.data;
     
             // Check if token is received

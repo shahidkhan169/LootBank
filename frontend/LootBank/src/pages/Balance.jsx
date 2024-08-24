@@ -43,7 +43,7 @@ const CheckBalance = () => {
 
       // Fetch balance with token in header
       const token = localStorage.getItem('token');
-      const response = await axios.post('http://localhost:3000/check-balance', { mpin }, {
+      const response = await axios.post('https://lootbank-api.onrender.com/check-balance', { mpin }, {
         headers: {
           Authorization: `Bearer ${token}`
         }

@@ -34,7 +34,7 @@ const Profile = () => {
       }
 
       try {
-        const response = await axios.get('http://localhost:3000/profile', {
+        const response = await axios.get('https://lootbank-api.onrender.com/profile', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
