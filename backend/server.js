@@ -17,8 +17,7 @@ app.use(cors(
 ));
 app.use(helmet());
 app.use(express.json());
-
-mongoose.connect("mongodb+srv://shahid1692004:bank1234@lootbank.wlmtn.mongodb.net/?retryWrites=true&w=majority&appName=LootBank")
+mongoose.connect("mongodb+srv://vibeeshn21aid:yVoFz5rMYL5wbLEv@userdata.vrirq.mongodb.net/") 
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("Failed to connect to MongoDB:", err.message));
 
