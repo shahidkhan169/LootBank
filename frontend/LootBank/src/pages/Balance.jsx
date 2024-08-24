@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { UserIcon } from '@heroicons/react/solid';
 import { MenuIcon } from '@heroicons/react/outline';
-import { useNavigate } from 'react-router-dom';
 
 const CheckBalance = () => {
   const [showDropdown, setShowDropdown] = useState(false);
