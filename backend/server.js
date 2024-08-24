@@ -17,10 +17,7 @@ app.use(cors({
 app.use(helmet());
 app.use(express.json());
 
-mongoose.connect("mongodb+srv://shahid1692004:bank1234@lootbank.wlmtn.mongodb.net/LootBank", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+mongoose.connect("mongodb+srv://shahid1692004:bank1234@lootbank.wlmtn.mongodb.net/LootBank?retryWrites=true&w=majority")
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("Failed to connect to MongoDB:", err.message));
 
